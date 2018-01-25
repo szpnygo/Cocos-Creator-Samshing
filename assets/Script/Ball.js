@@ -8,11 +8,17 @@
 //  - [Chinese] http://www.cocos.com/docs/creator/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/editors_and_tools/creator-chapters/scripting/life-cycle-callbacks/index.html
 
+var Game = require('Game');
+
 cc.Class({
     extends: cc.Component,
 
     properties: {
-
+        game:{
+            default: null,
+            type: cc.Node,
+        },
+        gameComp:null,
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -22,13 +28,13 @@ cc.Class({
     },
 
     start () {
-
+        this.gameComp = this.game.getComponent(Game);
     },
 
     update (dt) {
         let rect = this.node.getBoundingBoxToWorld();
         if(rect.y < 0){
-            this.node.emit('game_over');
+            this.gameComp.gameOver();
             this.node.destroy();
         }
     },

@@ -17,15 +17,15 @@ cc.Class({
         brickLayout: require('BrickLayout'),
         bricksNumber: cc.Integer,
         gameStart:false,
+        canvas: cc.Node,
     },
 
     onLoad () {
         cc.director.getPhysicsManager().enabled = true; 
         this.brickLayout.init(this.bricksNumber);
-        this.gameOver();
 
         let rigidbody = this.ball.getComponent(cc.RigidBody);
-        this.node.on(cc.Node.EventType.TOUCH_START,function(){
+        this.canvas.on(cc.Node.EventType.TOUCH_START,function(){
             if(!this.gameStart){
                 console.log("start");
                 this.gameStart = true;
@@ -44,11 +44,7 @@ cc.Class({
     },
 
     gameOver (){
-        this.ball.on('game_over',function(){
-            console.log("game_over");
-            this.gameStart = false;
-            cc.director.loadScene('Index');
-        });
-
+        this.gameStart = false;
+        cc.director.loadScene('Index');
     },
 });
